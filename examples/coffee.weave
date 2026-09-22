@@ -1,0 +1,8 @@
+event Order(order: number, drink: text);
+event Served(order: number, drink: text);
+
+promise FreshCoffee {
+  on Order;
+  expect Served within 2m;
+  match order, drink;
+}

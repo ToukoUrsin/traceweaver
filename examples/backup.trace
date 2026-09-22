@@ -1,0 +1,7 @@
+# Synthetic audit trail. No actual deletion occurs.
+0s Backup(dataset: "invoices", verified: true);
+1m Backup(dataset: "photos", verified: true);
+2m RestorePassed(dataset: "invoices", verified: false);
+3m RestorePassed(dataset: "photos", verified: true);
+4m Deleted(dataset: "invoices");
+6m RestorePassed(dataset: "invoices", verified: true);

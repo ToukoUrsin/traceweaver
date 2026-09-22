@@ -1,0 +1,6 @@
+# Synthetic release telemetry, not a production incident.
+0s Deploy(service: "api", version: "v42");
+5s Deploy(service: "web", version: "v17");
+12s Healthy(service: "web");
+18s Rollback(service: "api");
+40s Healthy(service: "api");

@@ -1,0 +1,15 @@
+event Backup(dataset: text, verified: bool);
+event RestorePassed(dataset: text, verified: bool);
+event Deleted(dataset: text);
+
+promise Recoverable {
+  on Backup;
+  expect RestorePassed within 5m;
+  match dataset, verified;
+}
+
+promise Retained {
+  on Backup;
+  forbid Deleted for 10m;
+  match dataset;
+}

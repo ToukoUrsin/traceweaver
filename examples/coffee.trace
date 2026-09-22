@@ -1,0 +1,6 @@
+# Entirely authored fixture; no customer records.
+0s Order(order: 101, drink: "flat white");
+10s Order(order: 102, drink: "espresso");
+40s Served(order: 101, drink: "espresso");
+70s Served(order: 102, drink: "espresso");
+150s Served(order: 101, drink: "flat white");

@@ -1,0 +1,16 @@
+# A health check must belong to the same service.
+event Deploy(service: text, version: text);
+event Healthy(service: text);
+event Rollback(service: text);
+
+promise Ready {
+  on Deploy;
+  expect Healthy within 30s;
+  match service;
+}
+
+promise Stable {
+  on Deploy;
+  forbid Rollback for 20s;
+  match service;
+}
