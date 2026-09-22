@@ -20,7 +20,9 @@ export function lex(source, name = 'policy') {
       if (!raw) throw new Diagnostic('Unterminated string. Use double quotes and JSON escapes.', at, name);
       try { value = JSON.parse(raw); } catch { throw new Diagnostic('Invalid string escape.', at, name); }
       kind = 'string';
-    } else if ((raw = /^\d+(?:\.\d+)?(?:ms|s|m|h)\b/.exec(tail)?.[0])) {
+    } else if ((raw = /^\d+(?:\.\d+)?[A-Za-z]+\b/.exec(tail)?.[0])) {
+      const unit = /[A-Za-z]+$/.exec(raw)[0];
+      if (!['ms', 's', 'm', 'h'].includes(unit)) throw new Diagnostic(`Unknown time unit ${unit}. Use ms, s, m, or h.`, at, name);
       kind = 'duration'; value = duration(raw, at, name);
     } else if ((raw = /^-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/.exec(tail)?.[0])) {
       kind = 'number'; value = Number(raw);

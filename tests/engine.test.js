@@ -80,6 +80,10 @@ test('time labels preserve millisecond distinctions across minute boundary',()=>
  assert.equal(formatTime(60000),'1m'); assert.equal(formatTime(60001),'60.001s');
  assert.equal(formatTime(59999),'59.999s');
 });
+test('unknown time units explain supported units at the source location',()=>{
+ assert.throws(()=>compile(policy.replace('1s','2kg')),e=>/Unknown time unit kg/.test(e.message)&&/ms, s, m, or h/.test(e.message)&&e.column>0);
+ assert.equal(lex('1e2')[0].value,100);
+});
 test('CLI reports real interpreter outcomes and separates invalid input',()=>{
  const result=spawnSync(process.execPath,['src/cli.js','examples/deploy.weave','examples/deploy.trace','--at','30000'],{encoding:'utf8'});
  assert.equal(result.status,1); assert.deepEqual(JSON.parse(result.stdout).counts,{pending:0,fulfilled:2,violated:2});
