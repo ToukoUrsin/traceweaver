@@ -13,7 +13,7 @@ function run(initial) {
     const next = compile($('policy').value), nextEvents = parseTrace($('trace').value, next);
     program = next; events = nextEvents; end = timelineEnd(program, events);
     now = Math.min(end, initial ?? now); dirty = false; selected = '';
-    $('diagnostic').hidden = true; $('compile-status').textContent = `${program.events.size} event types · ${program.promises.length} typed promises · ${events.length} events`;
+    $('diagnostic').hidden = true; $('compile-status').textContent = [[program.events.size, 'event type'], [program.promises.length, 'typed promise'], [events.length, 'event']].map(([n, noun]) => `${n} ${noun}${n === 1 ? '' : 's'}`).join(' · ');
     $('scrub').max = end; setVisible(true); render(); return true;
   } catch (e) {
     $('compile-status').textContent = 'No evaluation: fix the diagnostic below.';
@@ -104,7 +104,7 @@ $('import').addEventListener('change', async e => {
     document.querySelector('.fixture').textContent = 'IMPORTED LOCAL TRACE';
     for (const b of $('examples').children) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }
     run(data.watermark); notice('Imported and recomputed. Stored results are ignored.');
-  } catch (error) { notice(`Import rejected: ${error.message}`); }
+  } catch (error) { notice(`Import rejected: ${error.line ? `${error.source}:${error.line}:${error.column} ` : ''}${error.message}`); }
   e.target.value = '';
 });
 load(0);
