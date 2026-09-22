@@ -1,0 +1,119 @@
+1
+00:00:01,127 --> 00:00:06,177
+Teams make promises like: every deployment becomes healthy within thirty seconds.
+
+2
+00:00:06,177 --> 00:00:08,797
+That sentence hides real questions.
+
+3
+00:00:08,797 --> 00:00:15,807
+Which health check counts? When does waiting turn into failure? And what does a missing event actually prove?
+
+4
+00:00:15,807 --> 00:00:23,467
+Traceweaver is a tiny temporal language that makes those promises executable, replayable, and explainable, right in the browser.
+
+5
+00:00:24,991 --> 00:00:29,681
+A Traceweaver program declares typed events, then promises over them.
+
+6
+00:00:29,681 --> 00:00:31,801
+I'll write one from scratch.
+
+7
+00:00:31,801 --> 00:00:35,351
+Deploy, Healthy and Rollback each carry a service field.
+
+8
+00:00:35,351 --> 00:00:41,631
+The Ready promise says: on every Deploy, expect a Healthy event within thirty seconds, matching on service.
+
+9
+00:00:41,631 --> 00:00:49,571
+Compile, and the lexer, parser and type checker accept it: three event types, one typed promise, five events from the trace.
+
+10
+00:00:51,130 --> 00:00:52,820
+Now replay the trace.
+
+11
+00:00:52,820 --> 00:00:56,330
+At zero seconds, the API deployment is pending. Not failed, just waiting.
+
+12
+00:00:56,330 --> 00:01:03,820
+Step forward. At twelve seconds, the web service is healthy, so its promise is fulfilled, while the API is still waiting.
+
+13
+00:01:03,820 --> 00:01:08,950
+At thirty seconds, the API window closes, and the promise is violated.
+
+14
+00:01:08,950 --> 00:01:14,100
+The witness is the trigger plus a closed, complete window.
+
+15
+00:01:14,100 --> 00:01:18,870
+The web health check was rejected as a look-alike, because the service field differs.
+
+16
+00:01:18,870 --> 00:01:23,800
+And a health check that arrives later, at forty seconds, cannot repair an expired promise.
+
+17
+00:01:25,304 --> 00:01:27,984
+Mistakes get located diagnostics.
+
+18
+00:01:27,984 --> 00:01:30,854
+Change the unit to sec, and compile.
+
+19
+00:01:30,854 --> 00:01:37,304
+Traceweaver points to the exact line and column, names the unknown unit, and lists the supported ones.
+
+20
+00:01:37,304 --> 00:01:41,104
+The old results are hidden, so you never read a stale answer.
+
+21
+00:01:41,104 --> 00:01:44,464
+Fix it, compile again, and the evaluation comes back.
+
+22
+00:01:46,011 --> 00:01:47,651
+Experiments are portable.
+
+23
+00:01:47,651 --> 00:01:52,171
+Export saves the source and the observation time, not the results.
+
+24
+00:01:52,171 --> 00:01:55,821
+Switch to another story, then import the saved file.
+
+25
+00:01:55,821 --> 00:02:02,121
+Traceweaver validates both sources and recomputes every obligation, ignoring any stored claims.
+
+26
+00:02:03,328 --> 00:02:06,268
+The same interpreter runs from the command line.
+
+27
+00:02:06,268 --> 00:02:16,138
+On the deployment example at thirty seconds, the CLI prints JSON: two violated, two fulfilled, and exit code one, because something was violated.
+
+28
+00:02:16,138 --> 00:02:24,148
+Eighteen tests cover deadline boundaries, same-time ordering, wrong keys, invalid units and import validation. All passing.
+
+29
+00:02:25,706 --> 00:02:33,836
+The grammar and semantics are documented in the language reference, with examples in the repository, and the workbench is live on GitHub Pages.
+
+30
+00:02:33,836 --> 00:02:37,706
+Traceweaver: a small language where not yet is different from never happened.

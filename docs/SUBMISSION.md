@@ -1,6 +1,6 @@
 # Syntax Summit submission draft
 
-Status: original project built locally; not registered/submitted by this agent. Public source, hosted demo and video URLs must be inserted only after they exist and are verified.
+Status: not submitted. Public source https://github.com/ToukoUrsin/traceweaver and live app https://toukoursin.github.io/traceweaver/ exist. Demo video `media/traceweaver-demo.mp4` (2:40) is recorded but not uploaded; insert the YouTube URL only after upload. Upload copy: `media/YOUTUBE.md`. Gallery screenshots: `media/traceweaver-*.png`.
 
 **Name:** Traceweaver
 
@@ -18,7 +18,7 @@ Status: original project built locally; not registered/submitted by this agent. 
 
 **Limits:** Synthetic examples only; no production validation, external telemetry feed or inference API. Completeness applies to the supplied trace, not unseen reality. Matching is broadcast, not event consumption. This is finite-trace checking, not a general proof assistant.
 
-**AI disclosure:** OpenAI Codex substantially assisted design, implementation, tests and documentation. Runtime uses no AI models. No private campaign code, YC code, real customer logs or third-party datasets were copied. Fixtures, grammar, UI and implementation were created for this project during September21,2026.
+**AI disclosure:** OpenAI Codex substantially assisted design, implementation, tests and documentation. Claude Code assisted browser QA fixes and produced the demo video, narrated by an ElevenLabs stock synthetic voice over real app footage. Runtime uses no AI models. No private campaign code, YC code, real customer logs or third-party datasets were copied. Fixtures, grammar, UI and implementation were created for this project during September21,2026.
 
 **Rights:** MIT license. System fonts and original CSS/SVG; no third-party runtime dependencies.
 

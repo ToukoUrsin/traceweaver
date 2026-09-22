@@ -1,13 +1,22 @@
-# Capture plan — approximately 2:30
+# Demo video
 
-Use actual app interactions. No invented incident data, user outcomes or fabricated success states. All timelines are explicitly synthetic. Keep policy, timeline and witness legible; scroll to each area instead of shrinking the full page.
+`media/traceweaver-demo.mp4`: 2:40, 1920×1080 H.264/AAC, English captions in `media/traceweaver-demo.en.srt`. Recorded September 22, 2026. Not yet uploaded; upload copy is in `media/YOUTUBE.md`.
 
-1. **0:00–0:15 / Hook.** Show the deployment story at30seconds: two violations, two fulfilled. “The health check is green. But it belongs to the wrong service. Traceweaver turns promises like ‘every deployment becomes healthy within thirty seconds’ into a tiny language you can execute.”
-2. **0:15–0:40 / The language.** Show event schemas and Ready rule. Explain typed fields, target, time unit and correlation. Change `match service` to `match missing`; compile and show located error. Restore it and compile. This proves the implementation is a language, not merely a static chart.
-3. **0:40–1:10 / Time.** Rewind; step through0,5,12,18,20,25,30seconds as available. At12, web is fulfilled while API is pending. At18, select Stable/API: trigger+rollback. At30, select Ready/API: closed window and wrong-service look-alike. A later40-second health event does not repair the expired promise.
-4. **1:10–1:35 / Transfer.** Switch to Coffee Shop. Inspect order101's wrong drink versus order102's fulfilled espresso. Explain two correlation fields. Switch to Backup to demonstrate Boolean typing and retention, without suggesting real deletions.
-5. **1:35–1:55 / Evidence.** Return Deployment, select a violation, jump to resolution. Explain two-event forbidden witness versus absence needing a complete-through window. “This checks the trace you supply. It cannot know whether telemetry is missing.”
-6. **1:55–2:15 / Reproducibility.** Export experiment, switch story, import saved file, observe recomputation. Show actual CLI/test terminal only if recorded, never overlay a fake success console.
-7. **2:15–2:30 / Payoff.** Return hero/workbench. “A small grammar. Explicit semantics. A replayable explanation. Traceweaver makes ‘not yet’ different from ‘never happened.’” Finish with source URL when actually published.
+## How it was made
 
-Narration is a draft, not recorded or listened to. Root owns final edit and public upload. Syntax Summit's published video cap is five minutes.
+- Footage is a single Playwright (headless Chromium) screen recording of the actual app at a 1600×900 viewport, served locally from this repository, scaled to 1080p. Every click, keystroke, download and file import happens in the real UI; pacing comes from holding real frames. A small dot shows where the automated mouse is.
+- The CLI/test scene shows real `node src/cli.js examples/deploy.weave examples/deploy.trace --at 30000` (exit code 1) and `npm test` (18 passing) output captured just before recording, with the CLI JSON truncated after 26 lines and marked as such.
+- The last scene loads the rendered language reference on GitHub and the live GitHub Pages app.
+- Narration is an ElevenLabs stock synthetic voice reading a script written for this video. Example traces are synthetic.
+
+## Scenes
+
+| Time | Scene | What happens on screen |
+|---|---|---|
+| 0:00 | The problem | Hero, the Deployment policy and trace, its 2 violated / 2 fulfilled results |
+| 0:25 | Writing a program | Policy cleared and a `Ready` promise typed from scratch, then compiled: 3 event types, 1 typed promise, 5 events |
+| 0:51 | Running it | Rewind to 0 (pending), step to 12s (web fulfilled, API pending), 30s (API violated), witness with the rejected `web` look-alike, then 40s: the late health check does not repair it |
+| 1:25 | Error recovery | `30s` edited to `30sec`: `policy:7:25 Unknown time unit sec. Use ms, s, m, or h.`, results hidden; fixed and recompiled |
+| 1:46 | Export and reimport | Export, switch to Coffee shop, import the saved file through the file chooser, results recomputed at 40s |
+| 2:03 | CLI and tests | Real captured terminal output |
+| 2:25 | Close | Rendered language reference, live app |
